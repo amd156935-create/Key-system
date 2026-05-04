@@ -8,7 +8,7 @@ playerGui = player:WaitForChild("PlayerGui")
 
 LINKVERTISE_SERVICE_ID = "129wiwiiw"
 WORKINK_SERVICE_ID = "abcd"
-LOOTLABS_SERVICE_ID = "Lootlabs69"
+LOOTLABS_SERVICE_ID = "lexushub"
 
 folderName = "LxKey"
 keyFile = folderName .. "/savedkey.key"
@@ -72,7 +72,7 @@ if isfile and isfile(keyFile) then
     local savedKey = readfile(keyFile)
     if ValidateKey(savedKey, LINKVERTISE_SERVICE_ID) 
     or ValidateKey(savedKey, WORKINK_SERVICE_ID) 
-    or ValidateKey(savedKey, LOOTLABS_SERVICE_ID) then  -- Added Lootlabs check
+    or ValidateKey(savedKey, LOOTLABS_SERVICE_ID) then
         unlocked = true
     end
 end
