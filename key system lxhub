@@ -6,9 +6,10 @@ HttpService = game:GetService("HttpService")
 player = Players.LocalPlayer
 playerGui = player:WaitForChild("PlayerGui")
 
+
 LINKVERTISE_SERVICE_ID = "129wiwiiw"
+
 WORKINK_SERVICE_ID = "abcd"
-LOOTLABS_SERVICE_ID = "lexushub"
 
 folderName = "LxKey"
 keyFile = folderName .. "/savedkey.key"
@@ -67,12 +68,9 @@ function GetPandaKeyLink(serviceId)
     return "https://new.pandadevelopment.net/getkey/" .. serviceId .. "?hwid=" .. hwid()
 end
 
-
 if isfile and isfile(keyFile) then
     local savedKey = readfile(keyFile)
-    if ValidateKey(savedKey, LINKVERTISE_SERVICE_ID) 
-    or ValidateKey(savedKey, WORKINK_SERVICE_ID) 
-    or ValidateKey(savedKey, LOOTLABS_SERVICE_ID) then
+    if ValidateKey(savedKey, LINKVERTISE_SERVICE_ID) or ValidateKey(savedKey, WORKINK_SERVICE_ID) then
         unlocked = true
     end
 end
@@ -174,7 +172,7 @@ if not unlocked then
     function createOptionsFrame()
         optionsFrame = Instance.new("Frame")
         optionsFrame.Parent = frame
-        optionsFrame.Size = UDim2.fromOffset(398, 220)
+        optionsFrame.Size = UDim2.fromOffset(398, 170)
         optionsFrame.Position = UDim2.fromOffset(16, 230)
         optionsFrame.BackgroundColor3 = Color3.fromRGB(35, 5, 12)
         optionsFrame.Visible = false
@@ -187,7 +185,6 @@ if not unlocked then
         optionsStroke.Color = Color3.fromRGB(60, 0, 10)
         optionsStroke.Thickness = 1.5
 
-        
         linkvertiseBtn = Instance.new("TextButton")
         linkvertiseBtn.Parent = optionsFrame
         linkvertiseBtn.Size = UDim2.fromOffset(378, 45)
@@ -201,7 +198,10 @@ if not unlocked then
         lvCorner = Instance.new("UICorner", linkvertiseBtn)
         lvCorner.CornerRadius = UDim.new(0, 10)
 
-        
+        lvStroke = Instance.new("UIStroke", linkvertiseBtn)
+        lvStroke.Color = Color3.fromRGB(100, 20, 30)
+        lvStroke.Thickness = 1.5
+
         workinkBtn = Instance.new("TextButton")
         workinkBtn.Parent = optionsFrame
         workinkBtn.Size = UDim2.fromOffset(378, 45)
@@ -215,25 +215,14 @@ if not unlocked then
         wiCorner = Instance.new("UICorner", workinkBtn)
         wiCorner.CornerRadius = UDim.new(0, 10)
 
-        
-        lootlabsBtn = Instance.new("TextButton")
-        lootlabsBtn.Parent = optionsFrame
-        lootlabsBtn.Size = UDim2.fromOffset(378, 45)
-        lootlabsBtn.Position = UDim2.fromOffset(10, 120)
-        lootlabsBtn.Text = "Lootlabs"
-        lootlabsBtn.BackgroundColor3 = Color3.fromRGB(45, 10, 15)
-        lootlabsBtn.TextColor3 = Color3.fromRGB(255, 255, 255)
-        lootlabsBtn.Font = Enum.Font.GothamBold
-        lootlabsBtn.TextSize = 15
+        wiStroke = Instance.new("UIStroke", workinkBtn)
+        wiStroke.Color = Color3.fromRGB(100, 20, 30)
+        wiStroke.Thickness = 1.5
 
-        lootCorner = Instance.new("UICorner", lootlabsBtn)
-        lootCorner.CornerRadius = UDim.new(0, 10)
-
-    
         discordBtn = Instance.new("TextButton")
         discordBtn.Parent = optionsFrame
         discordBtn.Size = UDim2.fromOffset(378, 45)
-        discordBtn.Position = UDim2.fromOffset(10, 175)
+        discordBtn.Position = UDim2.fromOffset(10, 120)
         discordBtn.Text = " Discord"
         discordBtn.BackgroundColor3 = Color3.fromRGB(45, 10, 15)
         discordBtn.TextColor3 = Color3.fromRGB(255, 255, 255)
@@ -243,31 +232,39 @@ if not unlocked then
         dcCorner = Instance.new("UICorner", discordBtn)
         dcCorner.CornerRadius = UDim.new(0, 10)
 
-        
+        dcStroke = Instance.new("UIStroke", discordBtn)
+        dcStroke.Color = Color3.fromRGB(100, 20, 30)
+        dcStroke.Thickness = 1.5
+
         linkvertiseBtn.MouseButton1Click:Connect(function()
             local link = GetPandaKeyLink(LINKVERTISE_SERVICE_ID)
             fsetclipboard(link)
-            game.StarterGui:SetCore("SendNotification",{Title = "Copied", Text = "Linkvertise link copied!", Duration = 4})
+            game.StarterGui:SetCore("SendNotification",{
+                Title = "Copied",
+                Text = "Linkvertise link copied!",
+                Duration = 4
+            })
             hideOptions()
         end)
 
         workinkBtn.MouseButton1Click:Connect(function()
             local link = GetPandaKeyLink(WORKINK_SERVICE_ID)
             fsetclipboard(link)
-            game.StarterGui:SetCore("SendNotification",{Title = "Copied", Text = "Work.ink link copied!", Duration = 4})
-            hideOptions()
-        end)
-
-        lootlabsBtn.MouseButton1Click:Connect(function()
-            local link = GetPandaKeyLink(LOOTLABS_SERVICE_ID)
-            fsetclipboard(link)
-            game.StarterGui:SetCore("SendNotification",{Title = "Copied", Text = "Lootlabs link copied!", Duration = 4})
+            game.StarterGui:SetCore("SendNotification",{
+                Title = "Copied",
+                Text = "Work.ink link copied!", 
+                Duration = 4
+            })
             hideOptions()
         end)
 
         discordBtn.MouseButton1Click:Connect(function()
             fsetclipboard("https://discord.gg/6qBVRZRj59")
-            game.StarterGui:SetCore("SendNotification",{Title = "Copied!", Text = "Discord invite copied!", Duration = 4})
+            game.StarterGui:SetCore("SendNotification",{
+                Title = "Copied!",
+                Text = "Discord invite copied!",
+                Duration = 4
+            })
             hideOptions()
         end)
     end
@@ -276,7 +273,7 @@ if not unlocked then
         if not optionsFrame then createOptionsFrame() end
         optionsFrame.Visible = true
         TweenService:Create(frame, TweenInfo.new(0.3), {
-            Size = UDim2.fromOffset(460, 480) -- Increased height
+            Size = UDim2.fromOffset(460, 430)
         }):Play()
     end
 
@@ -287,7 +284,6 @@ if not unlocked then
         }):Play()
     end
 
-    
     TweenService:Create(frame,TweenInfo.new(0.45,Enum.EasingStyle.Quint),{
         Size = UDim2.fromOffset(430,250)
     }):Play()
@@ -310,6 +306,7 @@ if not unlocked then
         end
     end)
 
+    
     exit.MouseButton1Click:Connect(function()
         TweenService:Create(frame,TweenInfo.new(0.35),{
             Size = UDim2.fromOffset(0,0)
@@ -328,6 +325,7 @@ if not unlocked then
             if blur then blur:Destroy() end
             if gui then gui:Destroy() end
         end)
+        
     end)
 
     submit.MouseButton1Click:Connect(function()
@@ -340,9 +338,7 @@ if not unlocked then
             Duration = 3
         })
         
-        local isValid = ValidateKey(enteredKey, LINKVERTISE_SERVICE_ID) 
-                     or ValidateKey(enteredKey, WORKINK_SERVICE_ID)
-                     or ValidateKey(enteredKey, LOOTLABS_SERVICE_ID)
+        local isValid = ValidateKey(enteredKey, LINKVERTISE_SERVICE_ID) or ValidateKey(enteredKey, WORKINK_SERVICE_ID)
         
         if isValid then
             if not isfolder(folderName) then makefolder(folderName) end
