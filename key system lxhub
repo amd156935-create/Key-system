@@ -142,7 +142,7 @@ if not unlocked then
     shell.Parent = gui
     shell.AnchorPoint = Vector2.new(0.5, 0.5)
     shell.Position = UDim2.fromScale(0.5, 0.5)
-    shell.Size = UDim2.fromOffset(520, 330)
+    shell.Size = UDim2.fromOffset(520, 390)
     shell.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
     shell.BorderSizePixel = 0
     shell.ClipsDescendants = true
@@ -155,8 +155,8 @@ if not unlocked then
         if not camera then return end
         local viewport = camera.ViewportSize
         local usableWidth = math.max(viewport.X - 32, 320)
-        local usableHeight = math.max(viewport.Y - 32, 250)
-        local fit = math.min(usableWidth / 520, usableHeight / 330)
+        local usableHeight = math.max(viewport.Y - 32, 280)
+        local fit = math.min(usableWidth / 520, usableHeight / 390)
         scale.Scale = math.clamp(fit, 0.72, 1.12)
     end
 
@@ -209,28 +209,46 @@ if not unlocked then
     close.BorderSizePixel = 0
     Instance.new("UICorner", close).CornerRadius = UDim.new(0, 9)
 
-    local status = Instance.new("Frame")
-    status.Parent = shell
-    status.Position = UDim2.fromOffset(24, 82)
-    status.Size = UDim2.fromOffset(472, 58)
-    status.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
-    status.BorderSizePixel = 0
-    Instance.new("UICorner", status).CornerRadius = UDim.new(0, 12)
+    local profilePanel = Instance.new("Frame")
+    profilePanel.Parent = shell
+    profilePanel.Position = UDim2.fromOffset(24, 82)
+    profilePanel.Size = UDim2.fromOffset(220, 126)
+    profilePanel.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
+    profilePanel.BorderSizePixel = 0
+    Instance.new("UICorner", profilePanel).CornerRadius = UDim.new(0, 12)
+    local profileStroke = Instance.new("UIStroke")
+    profileStroke.Color = Color3.fromRGB(255, 255, 255)
+    profileStroke.Thickness = 1
+    profileStroke.Parent = profilePanel
 
-    local statusDot = Instance.new("Frame")
-    statusDot.Parent = status
-    statusDot.Position = UDim2.fromOffset(16, 20)
-    statusDot.Size = UDim2.fromOffset(14, 14)
-    statusDot.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-    statusDot.BorderSizePixel = 0
-    Instance.new("UICorner", statusDot).CornerRadius = UDim.new(1, 0)
+    Label(profilePanel, "PLAYER DISPLAY", UDim2.fromOffset(14, 12), UDim2.fromOffset(190, 18), 10, Color3.fromRGB(255, 255, 255), true)
+    Label(profilePanel, player.DisplayName, UDim2.fromOffset(14, 37), UDim2.fromOffset(190, 25), 17, Color3.fromRGB(255, 255, 255), true)
+    Label(profilePanel, "6 HOUR KEY", UDim2.fromOffset(14, 73), UDim2.fromOffset(190, 18), 11, Color3.fromRGB(255, 255, 255), true)
+    Label(profilePanel, "ACTIVE SESSION", UDim2.fromOffset(14, 94), UDim2.fromOffset(190, 16), 9, Color3.fromRGB(255, 255, 255), false)
 
-    Label(status, "ACCESS CHECK", UDim2.fromOffset(42, 9), UDim2.fromOffset(410, 19), 12, Color3.fromRGB(255, 255, 255), true)
-    Label(status, "Submit your token to continue", UDim2.fromOffset(42, 28), UDim2.fromOffset(410, 18), 11, Color3.fromRGB(255, 255, 255), false)
+    local accountPanel = Instance.new("Frame")
+    accountPanel.Parent = shell
+    accountPanel.Position = UDim2.fromOffset(258, 82)
+    accountPanel.Size = UDim2.fromOffset(238, 126)
+    accountPanel.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
+    accountPanel.BorderSizePixel = 0
+    Instance.new("UICorner", accountPanel).CornerRadius = UDim.new(0, 12)
+    local accountStroke = Instance.new("UIStroke")
+    accountStroke.Color = Color3.fromRGB(255, 255, 255)
+    accountStroke.Thickness = 1
+    accountStroke.Parent = accountPanel
+
+    Label(accountPanel, "ACCOUNT DETAILS", UDim2.fromOffset(14, 12), UDim2.fromOffset(210, 18), 10, Color3.fromRGB(255, 255, 255), true)
+    Label(accountPanel, "USERNAME", UDim2.fromOffset(14, 39), UDim2.fromOffset(92, 17), 9, Color3.fromRGB(255, 255, 255), false)
+    Label(accountPanel, "@" .. player.Name, UDim2.fromOffset(104, 39), UDim2.fromOffset(118, 17), 10, Color3.fromRGB(255, 255, 255), true)
+    Label(accountPanel, "USER ID", UDim2.fromOffset(14, 64), UDim2.fromOffset(92, 17), 9, Color3.fromRGB(255, 255, 255), false)
+    Label(accountPanel, tostring(player.UserId), UDim2.fromOffset(104, 64), UDim2.fromOffset(118, 17), 10, Color3.fromRGB(255, 255, 255), true)
+    Label(accountPanel, "DISPLAY NAME", UDim2.fromOffset(14, 89), UDim2.fromOffset(92, 17), 9, Color3.fromRGB(255, 255, 255), false)
+    Label(accountPanel, player.DisplayName, UDim2.fromOffset(104, 89), UDim2.fromOffset(118, 17), 10, Color3.fromRGB(255, 255, 255), true)
 
     local keyBorder = Instance.new("Frame")
     keyBorder.Parent = shell
-    keyBorder.Position = UDim2.fromOffset(24, 158)
+    keyBorder.Position = UDim2.fromOffset(24, 222)
     keyBorder.Size = UDim2.fromOffset(472, 48)
     keyBorder.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
     keyBorder.BorderSizePixel = 0
@@ -240,7 +258,7 @@ if not unlocked then
     local keyBox = Instance.new("TextBox")
     keyBox.Parent = shell
     keyBox.ZIndex = 2
-    keyBox.Position = UDim2.fromOffset(26, 160)
+    keyBox.Position = UDim2.fromOffset(26, 224)
     keyBox.Size = UDim2.fromOffset(468, 44)
     keyBox.PlaceholderText = "Drop your access token here"
     keyBox.PlaceholderColor3 = Color3.fromRGB(255, 255, 255)
@@ -266,7 +284,7 @@ if not unlocked then
 
     local submit = Instance.new("TextButton")
     submit.Parent = shell
-    submit.Position = UDim2.fromOffset(24, 218)
+    submit.Position = UDim2.fromOffset(24, 282)
     submit.Size = UDim2.fromOffset(472, 46)
     submit.Text = "VERIFY & ENTER"
     submit.TextColor3 = Color3.fromRGB(0, 0, 0)
@@ -283,7 +301,7 @@ if not unlocked then
 
     local divider = Instance.new("Frame")
     divider.Parent = shell
-    divider.Position = UDim2.fromOffset(24, 282)
+    divider.Position = UDim2.fromOffset(24, 346)
     divider.Size = UDim2.fromOffset(472, 1)
     divider.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
     divider.BorderSizePixel = 0
@@ -291,60 +309,28 @@ if not unlocked then
     local getKey = Instance.new("TextButton")
     getKey.Parent = shell
     getKey.ZIndex = 2
-    getKey.Position = UDim2.fromOffset(26, 296)
-    getKey.Size = UDim2.fromOffset(222, 26)
+    getKey.Position = UDim2.fromOffset(24, 358)
+    getKey.Size = UDim2.fromOffset(226, 30)
     getKey.Text = "GET KEY"
     getKey.TextColor3 = Color3.fromRGB(255, 255, 255)
     getKey.FontFace = MICHROMA_FONT
     getKey.TextTransparency = 0.16
     getKey.TextSize = 11
-    getKey.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
-    getKey.BackgroundTransparency = 0
+    getKey.BackgroundTransparency = 1
     getKey.BorderSizePixel = 0
-    Instance.new("UICorner", getKey).CornerRadius = UDim.new(0, 9)
-    local getKeyStroke = Instance.new("UIStroke")
-    getKeyStroke.Color = Color3.fromRGB(255, 255, 255)
-    getKeyStroke.Thickness = 0
-    getKeyStroke.Transparency = 1
-    getKeyStroke.Parent = getKey
-
-    local getKeyBorder = Instance.new("Frame")
-    getKeyBorder.Parent = shell
-    getKeyBorder.Position = UDim2.fromOffset(24, 294)
-    getKeyBorder.Size = UDim2.fromOffset(226, 30)
-    getKeyBorder.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-    getKeyBorder.BorderSizePixel = 0
-    getKeyBorder.ZIndex = 1
-    Instance.new("UICorner", getKeyBorder).CornerRadius = UDim.new(0, 9)
 
     local discord = Instance.new("TextButton")
     discord.Parent = shell
     discord.ZIndex = 2
-    discord.Position = UDim2.fromOffset(272, 296)
-    discord.Size = UDim2.fromOffset(222, 26)
+    discord.Position = UDim2.fromOffset(270, 358)
+    discord.Size = UDim2.fromOffset(226, 30)
     discord.Text = "COPY DISCORD LINK"
     discord.TextColor3 = Color3.fromRGB(255, 255, 255)
     discord.FontFace = MICHROMA_FONT
     discord.TextTransparency = 0.16
     discord.TextSize = 11
-    discord.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
-    discord.BackgroundTransparency = 0
+    discord.BackgroundTransparency = 1
     discord.BorderSizePixel = 0
-    Instance.new("UICorner", discord).CornerRadius = UDim.new(0, 9)
-    local discordBorder = Instance.new("Frame")
-    discordBorder.Parent = shell
-    discordBorder.Position = UDim2.fromOffset(270, 294)
-    discordBorder.Size = UDim2.fromOffset(226, 30)
-    discordBorder.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-    discordBorder.BorderSizePixel = 0
-    discordBorder.ZIndex = 1
-    Instance.new("UICorner", discordBorder).CornerRadius = UDim.new(0, 9)
-
-    local discordStroke = Instance.new("UIStroke")
-    discordStroke.Color = Color3.fromRGB(255, 255, 255)
-    discordStroke.Thickness = 0
-    discordStroke.Transparency = 1
-    discordStroke.Parent = discord
 
     local function CloseGui()
         TweenService:Create(shell, TweenInfo.new(0.3, Enum.EasingStyle.Quint), {
@@ -390,7 +376,7 @@ if not unlocked then
     end)
 
     TweenService:Create(shell, TweenInfo.new(0.45, Enum.EasingStyle.Quint), {
-        Size = UDim2.fromOffset(520, 330)
+        Size = UDim2.fromOffset(520, 390)
     }):Play()
     TweenService:Create(overlay, TweenInfo.new(0.4), { BackgroundTransparency = 0.34 }):Play()
     TweenService:Create(blur, TweenInfo.new(0.4), { Size = 18 }):Play()
