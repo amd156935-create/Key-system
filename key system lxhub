@@ -1,3 +1,4 @@
+
 local TweenService = game:GetService("TweenService")
 local Lighting = game:GetService("Lighting")
 local Players = game:GetService("Players")
@@ -221,10 +222,30 @@ if not unlocked then
     profileStroke.Thickness = 1
     profileStroke.Parent = profilePanel
 
+    local thumbnailImage, thumbnailReady = Players:GetUserThumbnailAsync(
+        player.UserId,
+        Enum.ThumbnailType.HeadShot,
+        Enum.ThumbnailSize.Size100x100
+    )
+
+    local avatar = Instance.new("ImageLabel")
+    avatar.Parent = profilePanel
+    avatar.Position = UDim2.fromOffset(14, 38)
+    avatar.Size = UDim2.fromOffset(58, 58)
+    avatar.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
+    avatar.BorderSizePixel = 0
+    avatar.Image = thumbnailReady and thumbnailImage or ""
+    avatar.ScaleType = Enum.ScaleType.Crop
+    Instance.new("UICorner", avatar).CornerRadius = UDim.new(1, 0)
+    local avatarStroke = Instance.new("UIStroke")
+    avatarStroke.Color = Color3.fromRGB(255, 255, 255)
+    avatarStroke.Thickness = 1
+    avatarStroke.Parent = avatar
+
     Label(profilePanel, "PLAYER DISPLAY", UDim2.fromOffset(14, 12), UDim2.fromOffset(190, 18), 10, Color3.fromRGB(255, 255, 255), true)
-    Label(profilePanel, player.DisplayName, UDim2.fromOffset(14, 37), UDim2.fromOffset(190, 25), 17, Color3.fromRGB(255, 255, 255), true)
-    Label(profilePanel, "6 HOUR KEY", UDim2.fromOffset(14, 73), UDim2.fromOffset(190, 18), 11, Color3.fromRGB(255, 255, 255), true)
-    Label(profilePanel, "ACTIVE SESSION", UDim2.fromOffset(14, 94), UDim2.fromOffset(190, 16), 9, Color3.fromRGB(255, 255, 255), false)
+    Label(profilePanel, player.DisplayName, UDim2.fromOffset(84, 42), UDim2.fromOffset(122, 22), 13, Color3.fromRGB(255, 255, 255), true)
+    Label(profilePanel, "6 HOUR KEY", UDim2.fromOffset(84, 68), UDim2.fromOffset(122, 18), 10, Color3.fromRGB(255, 255, 255), true)
+    Label(profilePanel, "ACTIVE SESSION", UDim2.fromOffset(84, 90), UDim2.fromOffset(122, 16), 8, Color3.fromRGB(255, 255, 255), false)
 
     local accountPanel = Instance.new("Frame")
     accountPanel.Parent = shell
