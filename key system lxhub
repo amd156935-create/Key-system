@@ -204,7 +204,7 @@ if not unlocked then
     end
 
     Label(shell, "LxKey", UDim2.fromOffset(24, 20), UDim2.fromOffset(250, 28), 22, Color3.fromRGB(255, 255, 255), true)
-    Label(shell, "SESSION ACCESS", UDim2.fromOffset(24, 48), UDim2.fromOffset(250, 20), 11, Color3.fromRGB(255, 255, 255), true)
+    Label(shell, "GATEWAY VERIFICATION", UDim2.fromOffset(24, 48), UDim2.fromOffset(250, 20), 11, Color3.fromRGB(255, 255, 255), true)
 
     local close = Instance.new("TextButton")
     close.Parent = shell
@@ -234,14 +234,14 @@ if not unlocked then
     statusDot.BorderSizePixel = 0
     Instance.new("UICorner", statusDot).CornerRadius = UDim.new(1, 0)
 
-    Label(status, "KEY STATUS", UDim2.fromOffset(42, 9), UDim2.fromOffset(410, 19), 12, Color3.fromRGB(255, 255, 255), true)
-    Label(status, "Enter your access key to unlock this session", UDim2.fromOffset(42, 28), UDim2.fromOffset(410, 18), 11, Color3.fromRGB(255, 255, 255), false)
+    Label(status, "ACCESS CHECK", UDim2.fromOffset(42, 9), UDim2.fromOffset(410, 19), 12, Color3.fromRGB(255, 255, 255), true)
+    Label(status, "Submit your token to continue", UDim2.fromOffset(42, 28), UDim2.fromOffset(410, 18), 11, Color3.fromRGB(255, 255, 255), false)
 
     local keyBox = Instance.new("TextBox")
     keyBox.Parent = shell
     keyBox.Position = UDim2.fromOffset(24, 158)
     keyBox.Size = UDim2.fromOffset(472, 48)
-    keyBox.PlaceholderText = "Paste access key"
+    keyBox.PlaceholderText = "Drop your access token here"
     keyBox.PlaceholderColor3 = Color3.fromRGB(255, 255, 255)
     keyBox.Text = ""
     keyBox.ClearTextOnFocus = false
@@ -252,6 +252,11 @@ if not unlocked then
     keyBox.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
     keyBox.BorderSizePixel = 0
     Instance.new("UICorner", keyBox).CornerRadius = UDim.new(0, 11)
+    local keyStroke = Instance.new("UIStroke")
+    keyStroke.Color = Color3.fromRGB(255, 255, 255)
+    keyStroke.Thickness = 1
+    keyStroke.Transparency = 0
+    keyStroke.Parent = keyBox
     local keyPadding = Instance.new("UIPadding")
     keyPadding.Parent = keyBox
     keyPadding.PaddingLeft = UDim.new(0, 16)
@@ -261,20 +266,17 @@ if not unlocked then
     submit.Parent = shell
     submit.Position = UDim2.fromOffset(24, 218)
     submit.Size = UDim2.fromOffset(472, 46)
-    submit.Text = "UNLOCK SESSION"
-    submit.TextColor3 = Color3.fromRGB(255, 255, 255)
+    submit.Text = "VERIFY & ENTER"
+    submit.TextColor3 = Color3.fromRGB(0, 0, 0)
     submit.Font = Enum.Font.GothamBold
     submit.TextSize = 13
     submit.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
     submit.BorderSizePixel = 0
     Instance.new("UICorner", submit).CornerRadius = UDim.new(0, 11)
-
-    local submitGradient = Instance.new("UIGradient")
-    submitGradient.Color = ColorSequence.new({
-        ColorSequenceKeypoint.new(0, Color3.fromRGB(255, 255, 255)),
-        ColorSequenceKeypoint.new(1, Color3.fromRGB(0, 0, 0))
-    })
-    submitGradient.Parent = submit
+    local submitStroke = Instance.new("UIStroke")
+    submitStroke.Color = Color3.fromRGB(255, 255, 255)
+    submitStroke.Thickness = 1
+    submitStroke.Parent = submit
 
     local divider = Instance.new("Frame")
     divider.Parent = shell
@@ -287,7 +289,7 @@ if not unlocked then
     getKey.Parent = shell
     getKey.Position = UDim2.fromOffset(24, 294)
     getKey.Size = UDim2.fromOffset(226, 30)
-    getKey.Text = "GET ACCESS KEY"
+    getKey.Text = "GET KEY"
     getKey.TextColor3 = Color3.fromRGB(255, 255, 255)
     getKey.Font = Enum.Font.GothamBold
     getKey.TextSize = 11
@@ -297,7 +299,7 @@ if not unlocked then
     discord.Parent = shell
     discord.Position = UDim2.fromOffset(270, 294)
     discord.Size = UDim2.fromOffset(226, 30)
-    discord.Text = "COPY DISCORD INVITE"
+    discord.Text = "COPY DISCORD LINK"
     discord.TextColor3 = Color3.fromRGB(255, 255, 255)
     discord.Font = Enum.Font.GothamBold
     discord.TextSize = 11
@@ -328,21 +330,21 @@ if not unlocked then
     submit.MouseButton1Click:Connect(function()
         local enteredKey = keyBox.Text
         if enteredKey == "" then
-            Notify("Missing key", "Paste an access key first.", 3)
+            Notify("Token required", "Enter your token before continuing.", 3)
             return
         end
 
-        Notify("Please wait", "Validating access key...", 3)
+        Notify("Checking token", "Verifying your access token...", 3)
         if ValidateKey(enteredKey) then
             if not isfolder(folderName) then
                 makefolder(folderName)
             end
             writefile(keyFile, enteredKey)
-            Notify("Accepted", "Key accepted. Loading session...", 3)
+            Notify("Verified", "Token verified. Entering now...", 3)
             unlocked = true
             CloseGui()
         else
-            Notify("Invalid key", "That access key is not valid.", 4)
+            Notify("Verification failed", "That token could not be verified.", 4)
         end
     end)
 
