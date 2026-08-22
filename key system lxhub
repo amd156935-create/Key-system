@@ -80,8 +80,7 @@ local function GetKeyLink()
     return "https://new.pandadevelopment.net/getkey/" .. LINKVERTISE_SERVICE_ID .. "?hwid=" .. tostring(hwid())
 end
 
--- Opens the Discord invite through the desktop client's local RPC when available.
--- This cannot verify server membership; Discord must confirm that separately.
+
 local function Discord()
     local httpRequest = (syn and syn.request) or (http and http.request) or request
     local inviteCode = string.match(DISCORD_INVITE, "discord[.]com/invite/([%w%-]+)")
@@ -247,7 +246,7 @@ if not unlocked then
     Instance.new("UICorner", keyBox).CornerRadius = UDim.new(0, 11)
     local keyStroke = Instance.new("UIStroke")
     keyStroke.Color = Color3.fromRGB(255, 255, 255)
-    keyStroke.Thickness = 1
+    keyStroke.Thickness = 2
     keyStroke.Transparency = 0
     keyStroke.Parent = keyBox
     local keyPadding = Instance.new("UIPadding")
@@ -288,7 +287,15 @@ if not unlocked then
     getKey.FontFace = MICHROMA_FONT
     getKey.TextTransparency = 0.16
     getKey.TextSize = 11
-    getKey.BackgroundTransparency = 1
+    getKey.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
+    getKey.BackgroundTransparency = 0
+    getKey.BorderSizePixel = 0
+    Instance.new("UICorner", getKey).CornerRadius = UDim.new(0, 9)
+    local getKeyStroke = Instance.new("UIStroke")
+    getKeyStroke.Color = Color3.fromRGB(255, 255, 255)
+    getKeyStroke.Thickness = 1.5
+    getKeyStroke.Transparency = 0
+    getKeyStroke.Parent = getKey
 
     local discord = Instance.new("TextButton")
     discord.Parent = shell
@@ -299,7 +306,15 @@ if not unlocked then
     discord.FontFace = MICHROMA_FONT
     discord.TextTransparency = 0.16
     discord.TextSize = 11
-    discord.BackgroundTransparency = 1
+    discord.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
+    discord.BackgroundTransparency = 0
+    discord.BorderSizePixel = 0
+    Instance.new("UICorner", discord).CornerRadius = UDim.new(0, 9)
+    local discordStroke = Instance.new("UIStroke")
+    discordStroke.Color = Color3.fromRGB(255, 255, 255)
+    discordStroke.Thickness = 1.5
+    discordStroke.Transparency = 0
+    discordStroke.Parent = discord
 
     local function CloseGui()
         TweenService:Create(shell, TweenInfo.new(0.3, Enum.EasingStyle.Quint), {
