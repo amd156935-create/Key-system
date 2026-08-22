@@ -7,6 +7,7 @@ local player = Players.LocalPlayer
 local playerGui = player:WaitForChild("PlayerGui")
 
 local LINKVERTISE_SERVICE_ID = "129wiwiiw"
+local DISCORD_INVITE = "https://discord.gg/WURPVPPK8u"
 local folderName = "LxKey"
 local keyFile = folderName .. "/savedkey.key"
 
@@ -78,6 +79,41 @@ local function GetKeyLink()
     return "https://new.pandadevelopment.net/getkey/" .. LINKVERTISE_SERVICE_ID .. "?hwid=" .. tostring(hwid())
 end
 
+
+local function Discord()
+    local httpRequest = (syn and syn.request) or (http and http.request) or request
+    local inviteCode = string.match(DISCORD_INVITE, "discord[.]com/invite/([%w%-]+)")
+
+    if not httpRequest or not inviteCode then
+        fsetclipboard(DISCORD_INVITE)
+        Notify("Join Discord manually", "Invite copied to clipboard.", 5)
+        return
+    end
+
+    local success = pcall(function()
+        httpRequest({
+            Url = "http://127.0.0.1:6463/rpc?v=1",
+            Method = "POST",
+            Headers = {
+                ["Content-Type"] = "application/json",
+                ["Origin"] = "https://discord.com"
+            },
+            Body = HttpService:JSONEncode({
+                cmd = "INVITE_BROWSER",
+                args = { code = inviteCode },
+                nonce = HttpService:GenerateGUID(false)
+            })
+        })
+    end)
+
+    if success then
+        Notify("Discord invite opened", "Join the server in Discord, then return here.", 5)
+    else
+        fsetclipboard(DISCORD_INVITE)
+        Notify("Join Discord manually", "Invite copied to clipboard.", 5)
+    end
+end
+
 if isfile(keyFile) and ValidateKey(readfile(keyFile)) then
     unlocked = true
 end
@@ -97,7 +133,7 @@ if not unlocked then
     local overlay = Instance.new("Frame")
     overlay.Parent = gui
     overlay.Size = UDim2.fromScale(1, 1)
-    overlay.BackgroundColor3 = Color3.fromRGB(4, 6, 10)
+    overlay.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
     overlay.BackgroundTransparency = 1
     overlay.BorderSizePixel = 0
 
@@ -106,7 +142,7 @@ if not unlocked then
     shell.AnchorPoint = Vector2.new(0.5, 0.5)
     shell.Position = UDim2.fromScale(0.5, 0.5)
     shell.Size = UDim2.fromOffset(520, 330)
-    shell.BackgroundColor3 = Color3.fromRGB(13, 16, 23)
+    shell.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
     shell.BorderSizePixel = 0
     shell.ClipsDescendants = true
 
@@ -134,21 +170,21 @@ if not unlocked then
     shellCorner.Parent = shell
 
     local shellStroke = Instance.new("UIStroke")
-    shellStroke.Color = Color3.fromRGB(47, 57, 75)
-    shellStroke.Transparency = 0.25
+    shellStroke.Color = Color3.fromRGB(255, 255, 255)
+    shellStroke.Transparency = 0
     shellStroke.Thickness = 1.5
     shellStroke.Parent = shell
 
     local accent = Instance.new("Frame")
     accent.Parent = shell
     accent.Size = UDim2.new(1, 0, 0, 4)
-    accent.BackgroundColor3 = Color3.fromRGB(77, 142, 255)
+    accent.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
     accent.BorderSizePixel = 0
 
     local accentGradient = Instance.new("UIGradient")
     accentGradient.Color = ColorSequence.new({
-        ColorSequenceKeypoint.new(0, Color3.fromRGB(84, 155, 255)),
-        ColorSequenceKeypoint.new(1, Color3.fromRGB(139, 92, 246))
+        ColorSequenceKeypoint.new(0, Color3.fromRGB(255, 255, 255)),
+        ColorSequenceKeypoint.new(1, Color3.fromRGB(0, 0, 0))
     })
     accentGradient.Parent = accent
 
@@ -159,7 +195,7 @@ if not unlocked then
         label.Position = position
         label.Size = size
         label.Text = text
-        label.TextColor3 = color or Color3.fromRGB(235, 240, 248)
+        label.TextColor3 = color or Color3.fromRGB(255, 255, 255)
         label.Font = bold and Enum.Font.GothamBold or Enum.Font.Gotham
         label.TextSize = textSize
         label.TextXAlignment = Enum.TextXAlignment.Left
@@ -167,8 +203,8 @@ if not unlocked then
         return label
     end
 
-    Label(shell, "LxKey", UDim2.fromOffset(24, 20), UDim2.fromOffset(250, 28), 22, Color3.fromRGB(245, 248, 255), true)
-    Label(shell, "SESSION ACCESS", UDim2.fromOffset(24, 48), UDim2.fromOffset(250, 20), 11, Color3.fromRGB(130, 145, 170), true)
+    Label(shell, "LxKey", UDim2.fromOffset(24, 20), UDim2.fromOffset(250, 28), 22, Color3.fromRGB(255, 255, 255), true)
+    Label(shell, "SESSION ACCESS", UDim2.fromOffset(24, 48), UDim2.fromOffset(250, 20), 11, Color3.fromRGB(255, 255, 255), true)
 
     local close = Instance.new("TextButton")
     close.Parent = shell
@@ -177,8 +213,8 @@ if not unlocked then
     close.Text = "×"
     close.TextSize = 22
     close.Font = Enum.Font.Gotham
-    close.TextColor3 = Color3.fromRGB(160, 173, 195)
-    close.BackgroundColor3 = Color3.fromRGB(24, 29, 40)
+    close.TextColor3 = Color3.fromRGB(255, 255, 255)
+    close.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
     close.BorderSizePixel = 0
     Instance.new("UICorner", close).CornerRadius = UDim.new(0, 9)
 
@@ -186,7 +222,7 @@ if not unlocked then
     status.Parent = shell
     status.Position = UDim2.fromOffset(24, 82)
     status.Size = UDim2.fromOffset(472, 58)
-    status.BackgroundColor3 = Color3.fromRGB(20, 25, 34)
+    status.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
     status.BorderSizePixel = 0
     Instance.new("UICorner", status).CornerRadius = UDim.new(0, 12)
 
@@ -194,26 +230,26 @@ if not unlocked then
     statusDot.Parent = status
     statusDot.Position = UDim2.fromOffset(16, 20)
     statusDot.Size = UDim2.fromOffset(14, 14)
-    statusDot.BackgroundColor3 = Color3.fromRGB(255, 173, 61)
+    statusDot.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
     statusDot.BorderSizePixel = 0
     Instance.new("UICorner", statusDot).CornerRadius = UDim.new(1, 0)
 
-    Label(status, "KEY STATUS", UDim2.fromOffset(42, 9), UDim2.fromOffset(410, 19), 12, Color3.fromRGB(235, 240, 248), true)
-    Label(status, "Enter your access key to unlock this session", UDim2.fromOffset(42, 28), UDim2.fromOffset(410, 18), 11, Color3.fromRGB(135, 147, 168), false)
+    Label(status, "KEY STATUS", UDim2.fromOffset(42, 9), UDim2.fromOffset(410, 19), 12, Color3.fromRGB(255, 255, 255), true)
+    Label(status, "Enter your access key to unlock this session", UDim2.fromOffset(42, 28), UDim2.fromOffset(410, 18), 11, Color3.fromRGB(255, 255, 255), false)
 
     local keyBox = Instance.new("TextBox")
     keyBox.Parent = shell
     keyBox.Position = UDim2.fromOffset(24, 158)
     keyBox.Size = UDim2.fromOffset(472, 48)
     keyBox.PlaceholderText = "Paste access key"
-    keyBox.PlaceholderColor3 = Color3.fromRGB(112, 123, 143)
+    keyBox.PlaceholderColor3 = Color3.fromRGB(255, 255, 255)
     keyBox.Text = ""
     keyBox.ClearTextOnFocus = false
-    keyBox.TextColor3 = Color3.fromRGB(245, 248, 255)
+    keyBox.TextColor3 = Color3.fromRGB(255, 255, 255)
     keyBox.Font = Enum.Font.Gotham
     keyBox.TextSize = 14
     keyBox.TextXAlignment = Enum.TextXAlignment.Left
-    keyBox.BackgroundColor3 = Color3.fromRGB(17, 21, 29)
+    keyBox.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
     keyBox.BorderSizePixel = 0
     Instance.new("UICorner", keyBox).CornerRadius = UDim.new(0, 11)
     local keyPadding = Instance.new("UIPadding")
@@ -229,14 +265,14 @@ if not unlocked then
     submit.TextColor3 = Color3.fromRGB(255, 255, 255)
     submit.Font = Enum.Font.GothamBold
     submit.TextSize = 13
-    submit.BackgroundColor3 = Color3.fromRGB(71, 129, 236)
+    submit.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
     submit.BorderSizePixel = 0
     Instance.new("UICorner", submit).CornerRadius = UDim.new(0, 11)
 
     local submitGradient = Instance.new("UIGradient")
     submitGradient.Color = ColorSequence.new({
-        ColorSequenceKeypoint.new(0, Color3.fromRGB(65, 132, 245)),
-        ColorSequenceKeypoint.new(1, Color3.fromRGB(115, 85, 226))
+        ColorSequenceKeypoint.new(0, Color3.fromRGB(255, 255, 255)),
+        ColorSequenceKeypoint.new(1, Color3.fromRGB(0, 0, 0))
     })
     submitGradient.Parent = submit
 
@@ -244,7 +280,7 @@ if not unlocked then
     divider.Parent = shell
     divider.Position = UDim2.fromOffset(24, 282)
     divider.Size = UDim2.fromOffset(472, 1)
-    divider.BackgroundColor3 = Color3.fromRGB(39, 46, 60)
+    divider.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
     divider.BorderSizePixel = 0
 
     local getKey = Instance.new("TextButton")
@@ -252,7 +288,7 @@ if not unlocked then
     getKey.Position = UDim2.fromOffset(24, 294)
     getKey.Size = UDim2.fromOffset(226, 30)
     getKey.Text = "GET ACCESS KEY"
-    getKey.TextColor3 = Color3.fromRGB(255, 204, 110)
+    getKey.TextColor3 = Color3.fromRGB(255, 255, 255)
     getKey.Font = Enum.Font.GothamBold
     getKey.TextSize = 11
     getKey.BackgroundTransparency = 1
@@ -261,8 +297,8 @@ if not unlocked then
     discord.Parent = shell
     discord.Position = UDim2.fromOffset(270, 294)
     discord.Size = UDim2.fromOffset(226, 30)
-    discord.Text = "JOIN DISCORD"
-    discord.TextColor3 = Color3.fromRGB(154, 181, 255)
+    discord.Text = "COPY DISCORD INVITE"
+    discord.TextColor3 = Color3.fromRGB(255, 255, 255)
     discord.Font = Enum.Font.GothamBold
     discord.TextSize = 11
     discord.BackgroundTransparency = 1
@@ -285,10 +321,7 @@ if not unlocked then
         Notify("Copied", "Access-key link copied to clipboard.", 4)
     end)
 
-    discord.MouseButton1Click:Connect(function()
-        fsetclipboard("https://discord.gg/6qBVRZRj59")
-        Notify("Copied", "Discord invite copied to clipboard.", 4)
-    end)
+    discord.MouseButton1Click:Connect(Discord)
 
     close.MouseButton1Click:Connect(CloseGui)
 
