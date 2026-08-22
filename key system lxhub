@@ -8,6 +8,7 @@ local playerGui = player:WaitForChild("PlayerGui")
 
 local LINKVERTISE_SERVICE_ID = "129wiwiiw"
 local DISCORD_INVITE = "https://discord.gg/WURPVPPK8u"
+local MICHROMA_FONT = Font.new("rbxasset://fonts/families/Michroma.json", Enum.FontWeight.Regular, Enum.FontStyle.Normal)
 local folderName = "LxKey"
 local keyFile = folderName .. "/savedkey.key"
 
@@ -79,7 +80,8 @@ local function GetKeyLink()
     return "https://new.pandadevelopment.net/getkey/" .. LINKVERTISE_SERVICE_ID .. "?hwid=" .. tostring(hwid())
 end
 
-
+-- Opens the Discord invite through the desktop client's local RPC when available.
+-- This cannot verify server membership; Discord must confirm that separately.
 local function Discord()
     local httpRequest = (syn and syn.request) or (http and http.request) or request
     local inviteCode = string.match(DISCORD_INVITE, "discord[.]com/invite/([%w%-]+)")
@@ -166,27 +168,15 @@ if not unlocked then
     end
 
     local shellCorner = Instance.new("UICorner")
-    shellCorner.CornerRadius = UDim.new(0, 18)
+    shellCorner.CornerRadius = UDim.new(0, 24)
     shellCorner.Parent = shell
 
     local shellStroke = Instance.new("UIStroke")
     shellStroke.Color = Color3.fromRGB(255, 255, 255)
     shellStroke.Transparency = 0
-    shellStroke.Thickness = 1.5
+    shellStroke.Thickness = 2
+    shellStroke.ApplyStrokeMode = Enum.ApplyStrokeMode.Border
     shellStroke.Parent = shell
-
-    local accent = Instance.new("Frame")
-    accent.Parent = shell
-    accent.Size = UDim2.new(1, 0, 0, 4)
-    accent.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-    accent.BorderSizePixel = 0
-
-    local accentGradient = Instance.new("UIGradient")
-    accentGradient.Color = ColorSequence.new({
-        ColorSequenceKeypoint.new(0, Color3.fromRGB(255, 255, 255)),
-        ColorSequenceKeypoint.new(1, Color3.fromRGB(0, 0, 0))
-    })
-    accentGradient.Parent = accent
 
     local function Label(parent, text, position, size, textSize, color, bold)
         local label = Instance.new("TextLabel")
@@ -196,7 +186,8 @@ if not unlocked then
         label.Size = size
         label.Text = text
         label.TextColor3 = color or Color3.fromRGB(255, 255, 255)
-        label.Font = bold and Enum.Font.GothamBold or Enum.Font.Gotham
+        label.FontFace = MICHROMA_FONT
+        label.TextTransparency = 0.16
         label.TextSize = textSize
         label.TextXAlignment = Enum.TextXAlignment.Left
         label.TextYAlignment = Enum.TextYAlignment.Center
@@ -212,7 +203,8 @@ if not unlocked then
     close.Size = UDim2.fromOffset(30, 30)
     close.Text = "×"
     close.TextSize = 22
-    close.Font = Enum.Font.Gotham
+    close.FontFace = MICHROMA_FONT
+    close.TextTransparency = 0.16
     close.TextColor3 = Color3.fromRGB(255, 255, 255)
     close.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
     close.BorderSizePixel = 0
@@ -246,7 +238,8 @@ if not unlocked then
     keyBox.Text = ""
     keyBox.ClearTextOnFocus = false
     keyBox.TextColor3 = Color3.fromRGB(255, 255, 255)
-    keyBox.Font = Enum.Font.Gotham
+    keyBox.FontFace = MICHROMA_FONT
+    keyBox.TextTransparency = 0.12
     keyBox.TextSize = 14
     keyBox.TextXAlignment = Enum.TextXAlignment.Left
     keyBox.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
@@ -268,7 +261,8 @@ if not unlocked then
     submit.Size = UDim2.fromOffset(472, 46)
     submit.Text = "VERIFY & ENTER"
     submit.TextColor3 = Color3.fromRGB(0, 0, 0)
-    submit.Font = Enum.Font.GothamBold
+    submit.FontFace = MICHROMA_FONT
+    submit.TextTransparency = 0.10
     submit.TextSize = 13
     submit.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
     submit.BorderSizePixel = 0
@@ -291,7 +285,8 @@ if not unlocked then
     getKey.Size = UDim2.fromOffset(226, 30)
     getKey.Text = "GET KEY"
     getKey.TextColor3 = Color3.fromRGB(255, 255, 255)
-    getKey.Font = Enum.Font.GothamBold
+    getKey.FontFace = MICHROMA_FONT
+    getKey.TextTransparency = 0.16
     getKey.TextSize = 11
     getKey.BackgroundTransparency = 1
 
@@ -301,7 +296,8 @@ if not unlocked then
     discord.Size = UDim2.fromOffset(226, 30)
     discord.Text = "COPY DISCORD LINK"
     discord.TextColor3 = Color3.fromRGB(255, 255, 255)
-    discord.Font = Enum.Font.GothamBold
+    discord.FontFace = MICHROMA_FONT
+    discord.TextTransparency = 0.16
     discord.TextSize = 11
     discord.BackgroundTransparency = 1
 
