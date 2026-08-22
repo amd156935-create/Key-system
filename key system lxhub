@@ -228,10 +228,20 @@ if not unlocked then
     Label(status, "ACCESS CHECK", UDim2.fromOffset(42, 9), UDim2.fromOffset(410, 19), 12, Color3.fromRGB(255, 255, 255), true)
     Label(status, "Submit your token to continue", UDim2.fromOffset(42, 28), UDim2.fromOffset(410, 18), 11, Color3.fromRGB(255, 255, 255), false)
 
+    local keyBorder = Instance.new("Frame")
+    keyBorder.Parent = shell
+    keyBorder.Position = UDim2.fromOffset(24, 158)
+    keyBorder.Size = UDim2.fromOffset(472, 48)
+    keyBorder.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+    keyBorder.BorderSizePixel = 0
+    keyBorder.ZIndex = 1
+    Instance.new("UICorner", keyBorder).CornerRadius = UDim.new(0, 11)
+
     local keyBox = Instance.new("TextBox")
     keyBox.Parent = shell
-    keyBox.Position = UDim2.fromOffset(24, 158)
-    keyBox.Size = UDim2.fromOffset(472, 48)
+    keyBox.ZIndex = 2
+    keyBox.Position = UDim2.fromOffset(26, 160)
+    keyBox.Size = UDim2.fromOffset(468, 44)
     keyBox.PlaceholderText = "Drop your access token here"
     keyBox.PlaceholderColor3 = Color3.fromRGB(255, 255, 255)
     keyBox.Text = ""
@@ -246,8 +256,8 @@ if not unlocked then
     Instance.new("UICorner", keyBox).CornerRadius = UDim.new(0, 11)
     local keyStroke = Instance.new("UIStroke")
     keyStroke.Color = Color3.fromRGB(255, 255, 255)
-    keyStroke.Thickness = 2
-    keyStroke.Transparency = 0
+    keyStroke.Thickness = 0
+    keyStroke.Transparency = 1
     keyStroke.Parent = keyBox
     local keyPadding = Instance.new("UIPadding")
     keyPadding.Parent = keyBox
@@ -280,8 +290,9 @@ if not unlocked then
 
     local getKey = Instance.new("TextButton")
     getKey.Parent = shell
-    getKey.Position = UDim2.fromOffset(24, 294)
-    getKey.Size = UDim2.fromOffset(226, 30)
+    getKey.ZIndex = 2
+    getKey.Position = UDim2.fromOffset(26, 296)
+    getKey.Size = UDim2.fromOffset(222, 26)
     getKey.Text = "GET KEY"
     getKey.TextColor3 = Color3.fromRGB(255, 255, 255)
     getKey.FontFace = MICHROMA_FONT
@@ -293,14 +304,24 @@ if not unlocked then
     Instance.new("UICorner", getKey).CornerRadius = UDim.new(0, 9)
     local getKeyStroke = Instance.new("UIStroke")
     getKeyStroke.Color = Color3.fromRGB(255, 255, 255)
-    getKeyStroke.Thickness = 1.5
-    getKeyStroke.Transparency = 0
+    getKeyStroke.Thickness = 0
+    getKeyStroke.Transparency = 1
     getKeyStroke.Parent = getKey
+
+    local getKeyBorder = Instance.new("Frame")
+    getKeyBorder.Parent = shell
+    getKeyBorder.Position = UDim2.fromOffset(24, 294)
+    getKeyBorder.Size = UDim2.fromOffset(226, 30)
+    getKeyBorder.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+    getKeyBorder.BorderSizePixel = 0
+    getKeyBorder.ZIndex = 1
+    Instance.new("UICorner", getKeyBorder).CornerRadius = UDim.new(0, 9)
 
     local discord = Instance.new("TextButton")
     discord.Parent = shell
-    discord.Position = UDim2.fromOffset(270, 294)
-    discord.Size = UDim2.fromOffset(226, 30)
+    discord.ZIndex = 2
+    discord.Position = UDim2.fromOffset(272, 296)
+    discord.Size = UDim2.fromOffset(222, 26)
     discord.Text = "COPY DISCORD LINK"
     discord.TextColor3 = Color3.fromRGB(255, 255, 255)
     discord.FontFace = MICHROMA_FONT
@@ -310,10 +331,19 @@ if not unlocked then
     discord.BackgroundTransparency = 0
     discord.BorderSizePixel = 0
     Instance.new("UICorner", discord).CornerRadius = UDim.new(0, 9)
+    local discordBorder = Instance.new("Frame")
+    discordBorder.Parent = shell
+    discordBorder.Position = UDim2.fromOffset(270, 294)
+    discordBorder.Size = UDim2.fromOffset(226, 30)
+    discordBorder.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+    discordBorder.BorderSizePixel = 0
+    discordBorder.ZIndex = 1
+    Instance.new("UICorner", discordBorder).CornerRadius = UDim.new(0, 9)
+
     local discordStroke = Instance.new("UIStroke")
     discordStroke.Color = Color3.fromRGB(255, 255, 255)
-    discordStroke.Thickness = 1.5
-    discordStroke.Transparency = 0
+    discordStroke.Thickness = 0
+    discordStroke.Transparency = 1
     discordStroke.Parent = discord
 
     local function CloseGui()
