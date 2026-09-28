@@ -108,7 +108,7 @@ end
 
 if isfile(keyFile) then
     local saved = readfile(keyFile)
-    if saved and saved \~= "" and ValidateKey(saved) then
+    if saved and saved ~= "" and ValidateKey(saved) then
         unlocked = true
         getgenv().SCRIPT_KEY = saved
     end
